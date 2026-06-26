@@ -100,8 +100,8 @@ La arquitectura fue diseñada para permitir una futura migración a PostgreSQL s
 
 ### Administrador
 
-- **Usuario:** admin
-- **Contraseña:** La configurada al crear el superusuario.
+- **Usuario:** usuario1
+- **Contraseña:** usuario123456
 
 ### Cliente
 
