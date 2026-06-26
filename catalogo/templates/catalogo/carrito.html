@@ -1,0 +1,98 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<h1 class="fw-bold mb-4" style="color:#1b4332;">
+    Solicitud de Servicios
+</h1>
+
+{% if carrito.items.all %}
+
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-body">
+
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Precio unitario</th>
+                        <th>Cantidad de muestras</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in carrito.items.all %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.servicio.nombre }}</strong>
+                                <br>
+                                <small>{{ item.servicio.categoria.nombre }}</small>
+                            </td>
+
+                            <td>${{ item.servicio.precio }}</td>
+
+                            <td>
+                                <form method="post" action="{% url 'actualizar_carrito' item.id %}" class="d-flex">
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="number"
+                                        name="cantidad"
+                                        value="{{ item.cantidad }}"
+                                        min="1"
+                                        class="form-control me-2"
+                                        style="width:90px;"
+                                    >
+
+                                    <button type="submit" class="btn btn-sm chimera-btn-green">
+                                        Actualizar
+                                    </button>
+                                </form>
+                            </td>
+
+                            <td>
+                                <strong>${{ item.subtotal }}</strong>
+                            </td>
+
+                            <td>
+                                <a href="{% url 'quitar_del_carrito' item.id %}" class="btn btn-sm btn-danger">
+                                    Quitar
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-end">
+                <h3 style="color:#1b4332;">
+                    Total: ${{ carrito.total }}
+                </h3>
+
+                <a href="/" class="btn btn-outline-dark">
+                    Seguir agregando
+                </a>
+
+                <a href="{% url 'confirmar_solicitud' %}" class="btn chimera-btn-main">
+    Confirmar solicitud
+</a>
+            </div>
+
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="alert alert-info">
+        Aún no tienes servicios agregados a tu solicitud.
+    </div>
+
+    <a href="/" class="btn chimera-btn-main">
+        Explorar servicios
+    </a>
+
+{% endif %}
+
+{% endblock %}

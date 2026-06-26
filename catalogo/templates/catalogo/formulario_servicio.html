@@ -1,0 +1,35 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-4">
+
+                <h1 class="fw-bold mb-4" style="color:#1b4332;">
+                    {{ titulo }}
+                </h1>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn chimera-btn-main">
+                        Guardar
+                    </button>
+
+                    <a href="{% url 'admin_productos' %}" class="btn btn-outline-dark">
+                        Cancelar
+                    </a>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

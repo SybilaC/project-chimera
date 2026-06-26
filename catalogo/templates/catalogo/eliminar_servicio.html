@@ -1,0 +1,32 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<div class="card shadow border-0 rounded-4">
+    <div class="card-body p-5 text-center">
+
+        <h1 class="fw-bold text-danger">
+            Eliminar servicio
+        </h1>
+
+        <p class="lead">
+            ¿Estás segura de que deseas eliminar el servicio
+            <strong>{{ servicio.nombre }}</strong>?
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger">
+                Sí, eliminar
+            </button>
+
+            <a href="{% url 'admin_productos' %}" class="btn btn-outline-dark">
+                Cancelar
+            </a>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

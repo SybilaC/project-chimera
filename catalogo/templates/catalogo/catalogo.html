@@ -1,0 +1,132 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<section class="p-5 rounded-4 mb-5 text-white shadow"
+    style="
+        background:
+        linear-gradient(rgba(27, 67, 50, 0.88), rgba(27, 67, 50, 0.78)),
+        url('https://images.unsplash.com/photo-1581093588401-fbb62a02f120');
+        background-size: cover;
+        background-position: center;
+    ">
+
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold">
+                PROJECT CHIMERA
+            </h1>
+
+            <p class="lead">
+                Advanced Biotechnology Solutions
+            </p>
+
+            <p>
+                Transformamos muestras en información científica confiable mediante servicios de microbiología,
+                biología molecular, genómica y control ambiental.
+            </p>
+
+            <a href="#servicios" class="btn chimera-btn-main btn-lg mt-3">
+                Explorar Servicios
+            </a>
+        </div>
+
+        <div class="col-md-4 text-center d-none d-md-block">
+            <i class="bi bi-radioactive" style="font-size: 8rem; color: #f4d35e;"></i>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="row text-center">
+
+        <div class="col-md-3 mb-3">
+            <div class="p-3 bg-white rounded-4 shadow-sm">
+                <i class="bi bi-virus2 fs-1" style="color:#2d6a4f;"></i>
+                <h6 class="mt-2 fw-bold">Microbiología</h6>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="p-3 bg-white rounded-4 shadow-sm">
+                <i class="bi bi-diagram-3 fs-1" style="color:#2d6a4f;"></i>
+                <h6 class="mt-2 fw-bold">Biología Molecular</h6>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="p-3 bg-white rounded-4 shadow-sm">
+                <i class="bi bi-cpu fs-1" style="color:#2d6a4f;"></i>
+                <h6 class="mt-2 fw-bold">Genómica</h6>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="p-3 bg-white rounded-4 shadow-sm">
+                <i class="bi bi-droplet fs-1" style="color:#2d6a4f;"></i>
+                <h6 class="mt-2 fw-bold">Control Ambiental</h6>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<h2 id="servicios" class="mb-4 fw-bold" style="color:#1b4332;">
+    Servicios Científicos
+</h2>
+
+<div class="row">
+
+    {% for servicio in servicios %}
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 chimera-card shadow-sm">
+
+                {% if servicio.imagen_url %}
+                    <img src="{{ servicio.imagen_url }}" class="card-img-top" style="height:210px; object-fit:cover;">
+                {% endif %}
+
+                <div class="card-body">
+                    <span class="badge mb-2" style="background-color:#2d6a4f;">
+                        {{ servicio.categoria.nombre }}
+                    </span>
+
+                    <h5 class="card-title fw-bold" style="color:#1b4332;">
+                        {{ servicio.nombre }}
+                    </h5>
+
+                    <p class="card-text">
+                        {{ servicio.descripcion|truncatewords:18 }}
+                    </p>
+
+                    <p class="price-tag">
+                        ${{ servicio.precio }}
+                    </p>
+
+                    <a href="/servicio/{{ servicio.id }}/" class="btn chimera-btn-green">
+                        Ver detalle
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <a href="/carrito/agregar/{{ servicio.id }}/" class="btn chimera-btn-main">
+    Solicitar
+</a>
+                    {% else %}
+                        <a href="/login/" class="btn btn-outline-dark">
+                            Inicia sesión
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    {% empty %}
+
+        <p>No hay servicios disponibles todavía.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

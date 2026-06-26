@@ -1,0 +1,63 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<h1 class="fw-bold mb-4" style="color:#1b4332;">
+    Administración de Servicios
+</h1>
+
+<a href="{% url 'crear_servicio' %}" class="btn chimera-btn-main mb-3">
+    Crear nuevo servicio
+</a>
+
+<div class="card shadow border-0 rounded-4">
+    <div class="card-body">
+
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Disponible</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for servicio in servicios %}
+                    <tr>
+                        <td>{{ servicio.nombre }}</td>
+                        <td>{{ servicio.categoria.nombre }}</td>
+                        <td>${{ servicio.precio }}</td>
+                        <td>
+                            {% if servicio.disponible %}
+                                Sí
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'editar_servicio' servicio.id %}" class="btn btn-sm chimera-btn-green">
+                                Editar
+                            </a>
+
+                            <a href="{% url 'eliminar_servicio' servicio.id %}" class="btn btn-sm btn-danger">
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">
+                            No hay servicios registrados.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

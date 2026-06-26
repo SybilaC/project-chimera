@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Chimera</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #fff8e7;
+            font-family: 'Montserrat', sans-serif;
+            color: #22223b;
+        }
+
+        .chimera-navbar {
+            background-color: #1b4332;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .chimera-logo {
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f4d35e !important;
+        }
+
+        .chimera-btn-main {
+            background-color: #d4a017;
+            border: none;
+            color: #1b1b1b;
+            font-weight: 700;
+        }
+
+        .chimera-btn-main:hover {
+            background-color: #f4d35e;
+            color: #1b1b1b;
+        }
+
+        .chimera-btn-green {
+            background-color: #2d6a4f;
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .chimera-btn-green:hover {
+            background-color: #40916c;
+            color: white;
+        }
+
+        .chimera-footer {
+            background-color: #1b4332;
+            color: white;
+            margin-top: 80px;
+            padding: 40px 0;
+        }
+
+        .chimera-footer span {
+            color: #f4d35e;
+        }
+
+        .chimera-card {
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .chimera-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(27, 67, 50, 0.25);
+        }
+
+        .price-tag {
+            color: #d4a017;
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark chimera-navbar">
+    <div class="container">
+
+        <a class="navbar-brand chimera-logo" href="/">
+            <i class="bi bi-radioactive"></i> PROJECT CHIMERA
+        </a>
+
+        <div>
+            <a class="btn chimera-btn-main me-2" href="/">
+                <i class="bi bi-grid"></i> Catálogo
+            </a>
+
+            <a class="btn btn-outline-light me-2" href="/carrito/">
+                <i class="bi bi-bag-check"></i> Solicitud
+            </a>
+
+            {% if user.is_authenticated %}
+
+                {% if user.is_staff %}
+                    <a class="btn chimera-btn-green me-2" href="/admin-productos/">
+                        <i class="bi bi-tools"></i> Admin
+                    </a>
+                {% endif %}
+
+                <form action="/logout/" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-right"></i> Salir
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a class="btn btn-light me-2" href="/login/">
+                    <i class="bi bi-person"></i> Login
+                </a>
+
+                <a class="btn chimera-btn-green" href="/registro/">
+                    Registro
+                </a>
+
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info shadow-sm">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+<footer class="chimera-footer text-center">
+    <div class="container">
+        <h4 class="fw-bold">PROJECT <span>CHIMERA</span></h4>
+        <p>Advanced Biotechnology & Molecular Diagnostics</p>
+        <p class="mb-0">
+            Microbiología · Biología Molecular · Genómica · Control Ambiental
+        </p>
+        <small>Desarrollado por Sybila Cuminao</small>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+
+<div class="card shadow border-0 rounded-4">
+    <div class="card-body p-5 text-center">
+
+        <i class="bi bi-check-circle-fill" style="font-size: 5rem; color:#2d6a4f;"></i>
+
+        <h1 class="fw-bold mt-3" style="color:#1b4332;">
+            Solicitud confirmada
+        </h1>
+
+        <p class="lead">
+            Tu solicitud analítica fue registrada correctamente en Project Chimera.
+        </p>
+
+        <p>
+            Número de orden:
+            <strong>#{{ orden.id }}</strong>
+        </p>
+
+        <p>
+            Total registrado:
+            <strong>${{ orden.total }}</strong>
+        </p>
+
+        <hr>
+
+        <h4 class="fw-bold mb-3">
+            Servicios solicitados
+        </h4>
+
+        <ul class="list-group mb-4">
+            {% for item in orden.items.all %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>
+                        {{ item.servicio.nombre }} x {{ item.cantidad }}
+                    </span>
+
+                    <strong>
+                        ${{ item.subtotal }}
+                    </strong>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="/" class="btn chimera-btn-main">
+            Volver al catálogo
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}
